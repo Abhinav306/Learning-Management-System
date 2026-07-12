@@ -1,0 +1,32 @@
+# Build directories
+target/
+*.class
+
+# Git repositories
+.git/
+.gitignore
+
+# IDE config files
+.idea/
+*.iml
+.vscode/
+
+# Local configuration files
+.env
+local.properties
+
+# Antigravity artifacts
+.agents/
+AUTHENTICATION_FLOW.md
+PROJECT_ROADMAP.md
+PROJECT_DECISIONS.md
+PROJECT_PROGRESS.md
+PROJECT_CONSTITUTION.md
+README.md
+
+# Log files
+*.log
+logs/
+
+# Upload directory
+uploads/

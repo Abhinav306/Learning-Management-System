@@ -260,6 +260,22 @@
 
 *Next: Sprint 18 — Docker & Deployment*
 
+---
+
+### Sprint 18: Docker & Deployment
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Created `application-prod.yml` mapping environment variables for database configurations, Redis parameters, and automatic vector schema creation.
+- Configured a multi-stage `Dockerfile` performing a dependency-cached jar build and a lightweight Alpine runtime execution.
+- Added container hardening rules running the execution phase as a non-root user (`1000:1000`).
+- Configured `docker-compose.yml` orchestrating PostgreSQL (PGVector), Redis, and application containers.
+- Implemented container network isolation and persisted data folders via volumes.
+- Configured database and cache health checks preventing the application server from booting prior to dependency readiness.
+
+*Next: Sprint 19 — Comprehensive Testing*
+
+
 
 
 
