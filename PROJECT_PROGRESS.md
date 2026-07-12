@@ -214,4 +214,19 @@
 
 *Next: Sprint 15 — AI Quiz Generation*
 
+---
+
+### Sprint 15: AI Quiz Generation
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Added `aiGenerated` flag to the `Quiz` entity and response mapping schemas.
+- Implemented `AiQuizServiceImpl` parsing structured JSON schemas generated from lesson content.
+- Added validation checks preventing generation if lesson content is missing or too short (< 50 characters).
+- Implemented `POST /api/v1/courses/{courseId}/ai/quiz/generate` REST endpoint with role authentication checks (`ADMIN`, `INSTRUCTOR`).
+- Wrote unit and integration tests verifying generation logic, error pathways, and routing.
+
+*Next: Sprint 16 — AI Course Recommendations*
+
+
 

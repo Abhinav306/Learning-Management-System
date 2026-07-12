@@ -25,5 +25,6 @@ public class QuizResponse {
     private boolean shuffleQuestions;
     private UUID courseId;
     private UUID lessonId;
+    private boolean aiGenerated;
     private LocalDateTime createdAt;
 }

@@ -61,4 +61,8 @@ public class Quiz extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean aiGenerated = false;
 }
