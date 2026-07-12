@@ -8,10 +8,10 @@
 
 | Field | Value |
 |---|---|
-| **Current Phase** | Phase 0 — Architecture & Planning |
-| **Current Sprint** | Pre-Sprint |
+| **Current Phase** | Completed |
+| **Current Sprint** | Sprint 20 — Final Deployment |
 | **Start Date** | 2026-07-11 |
-| **Last Updated** | 2026-07-11 |
+| **Last Updated** | 2026-07-12 |
 
 ---
 
@@ -290,6 +290,22 @@
 - Ran entire test suite verifying all 51 test cases compile and pass cleanly under local configuration profile.
 
 *Next: Sprint 20 — Monitoring & Production Hardening*
+
+---
+
+### Sprint 20: Monitoring & Production Hardening
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Created a custom Spring Actuator health check class `UploadsFolderHealthIndicator` to verify write permissions on directory.
+- Added Flyway migration dependencies to `pom.xml`.
+- Configured application profiles (`application.yml`, `application-dev.yml`, `application-prod.yml`) ensuring database version management is active on PostgreSQL-backed runs, but cleanly bypassed on H2 tests.
+- Configured Logback configurations `logback-spring.xml` enabling custom console output profiles for development and rotating daily files for production log tracking.
+- Polished root `README.md` with complete documentation, docker compose procedures, Swagger link guidelines, and test scripts.
+- Verified that all 51 test cases compile and run successfully.
+
+*Next: Project Finished successfully!*
+
 
 
 

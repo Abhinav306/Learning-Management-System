@@ -15,7 +15,7 @@ public class AiConfig {
     @Bean
     @Profile("!local")
     public VectorStore pgVectorStore(JdbcTemplate jdbcTemplate, EmbeddingModel embeddingModel) {
-        return new PgVectorStore(jdbcTemplate, embeddingModel);
+        return PgVectorStore.builder(jdbcTemplate, embeddingModel).build();
     }
 
     @Bean

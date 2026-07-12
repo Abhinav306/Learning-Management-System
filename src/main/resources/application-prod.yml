@@ -36,3 +36,8 @@ spring:
     vectorstore:
       pgvector:
         initialize-schema: true
+
+  # ── Flyway Database Migrations ──
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
