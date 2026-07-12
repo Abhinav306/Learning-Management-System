@@ -8,6 +8,14 @@ server:
   port: 8080
 
 spring:
+  ai:
+    openai:
+      api-key: ${SPRING_AI_OPENAI_API_KEY:local-key-not-set}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+
   # ── DataSource (H2 In-Memory) ──
   datasource:
     url: jdbc:h2:mem:lms_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE

@@ -200,3 +200,18 @@
 
 *Next: Sprint 14 — AI Tutor*
 
+---
+
+### Sprint 14: AI Tutor
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Added Spring AI BOM and OpenAI model starter configurations.
+- Implemented `AiChatSession` and `AiChatMessage` database entities and repositories.
+- Integrated chat history replay and context-aware course tutoring prompts in `AiTutorServiceImpl`.
+- Implemented SSE (Server-Sent Events) streaming controller endpoint `POST /api/v1/ai/tutor/sessions/{sessionId}/messages`.
+- Added unit and integration tests covering the service layer and controller mapping routes.
+
+*Next: Sprint 15 — AI Quiz Generation*
+
+

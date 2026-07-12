@@ -14,6 +14,14 @@ spring:
       max-file-size: 5MB
       max-request-size: 5MB
 
+  ai:
+    openai:
+      api-key: ${SPRING_AI_OPENAI_API_KEY}
+      chat:
+        options:
+          model: gpt-4o-mini
+          temperature: 0.7
+
 app:
   upload:
     dir: uploads
