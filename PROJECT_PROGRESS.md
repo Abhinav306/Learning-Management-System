@@ -228,5 +228,21 @@
 
 *Next: Sprint 16 — AI Course Recommendations*
 
+---
+
+### Sprint 16: AI Course Recommendations
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Added `findPopularCourses` aggregation query to `CourseRepository` ranking published courses by enrollment count.
+- Implemented `RecommendationServiceImpl` with personalized AI recommendations using enrollment history analysis.
+- Added cold-start fallback: new students with no enrollment history receive popular courses automatically.
+- Added graceful error handling: if LLM call fails, system falls back to popular courses instead of crashing.
+- Exposed two REST endpoints: `GET /api/v1/ai/recommendations` (authenticated) and `GET /api/v1/ai/recommendations/popular` (public).
+- Wrote unit tests covering personalized pathway, cold-start fallback, and LLM error resilience.
+
+*Next: Sprint 17 — RAG: Chat with Documents*
+
+
 
 
