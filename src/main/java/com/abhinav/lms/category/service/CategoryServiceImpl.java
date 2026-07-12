@@ -10,6 +10,8 @@ import com.abhinav.lms.exception.DuplicateResourceException;
 import com.abhinav.lms.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "categories", allEntries = true)
     public CategoryResponse createCategory(CategoryRequest request) {
         log.info("Creating new category: {}", request.getName());
 
@@ -70,6 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    @Cacheable(value = "categories", key = "'all'")
     public List<CategoryResponse> getAllCategories() {
         log.debug("Fetching all categories");
         List<Category> categories = categoryRepository.findAll();
@@ -85,6 +89,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "categories", allEntries = true)
     public CategoryResponse updateCategory(UUID id, CategoryRequest request) {
         log.info("Updating category with ID: {}", id);
         Category category = findCategoryByIdOrThrow(id);
@@ -121,6 +126,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "categories", allEntries = true)
     public void deleteCategory(UUID id) {
         log.info("Deleting category with ID: {}", id);
         Category category = findCategoryByIdOrThrow(id);

@@ -16,6 +16,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,6 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Cacheable(value = "users", key = "#email")
     public UserResponse getUserByEmail(String email) {
         log.debug("Fetching user by email: {}", email);
         User user = userRepository.findByEmail(email)
@@ -103,6 +106,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "users", allEntries = true)
     public UserResponse updateUser(UUID id, UpdateUserRequest request) {
         log.info("Updating user with id: {}", id);
 
@@ -124,6 +128,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "users", allEntries = true)
     public void deleteUser(UUID id) {
         log.info("Deleting user with id: {}", id);
 

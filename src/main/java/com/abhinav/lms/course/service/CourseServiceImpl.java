@@ -22,6 +22,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +43,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
+    @CacheEvict(value = "courses", allEntries = true)
     public CourseResponse createCourse(CourseRequest request, UserPrincipal currentUser) {
         log.info("Creating course by instructor: {}", currentUser.getUsername());
 
@@ -62,6 +66,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable(value = "course_details", key = "#id")
     public CourseResponse getCourseById(UUID id) {
         log.debug("Fetching course by id: {}", id);
         Course course = findCourseByIdOrThrow(id);
@@ -115,6 +120,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "courses", allEntries = true),
+            @CacheEvict(value = "course_details", key = "#id")
+    })
     public CourseResponse updateCourse(UUID id, CourseRequest request, UserPrincipal currentUser) {
         log.info("Updating course with ID: {}", id);
         Course course = findCourseByIdOrThrow(id);
@@ -136,6 +145,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
+    @Caching(evict = {
+            @CacheEvict(value = "courses", allEntries = true),
+            @CacheEvict(value = "course_details", key = "#id")
+    })
     public void deleteCourse(UUID id, UserPrincipal currentUser) {
         log.info("Deleting course with ID: {}", id);
         Course course = findCourseByIdOrThrow(id);
