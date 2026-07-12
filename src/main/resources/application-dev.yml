@@ -1,0 +1,49 @@
+# ═══════════════════════════════════════════════════════════════
+# AI-Powered LMS — Development Profile
+# ═══════════════════════════════════════════════════════════════
+
+server:
+  port: 8080
+
+spring:
+  # ── DataSource ──
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lms_db
+    username: lms_user
+    password: lms_password_123
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-timeout: 20000
+
+  # ── JPA / Hibernate ──
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# ── Swagger ──
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+
+# ── Logging ──
+logging:
+  level:
+    com.abhinav.lms: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# ── Application Configuration ──
+app:
+  jwt:
+    secret: "9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d"
+    expiration-ms: 900000 # 15 minutes
+    refresh-expiration-ms: 604800000 # 7 days

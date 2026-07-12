@@ -1,0 +1,40 @@
+# ═══════════════════════════════════════════════════════════════
+# AI-Powered LMS — Production Profile
+# ═══════════════════════════════════════════════════════════════
+
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  # ── DataSource ──
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+  # ── JPA / Hibernate ──
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+# ── Swagger (disabled in production) ──
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+# ── Logging ──
+logging:
+  level:
+    com.abhinav.lms: INFO
+    org.springframework: WARN
+    org.hibernate: WARN

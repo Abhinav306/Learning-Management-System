@@ -1,0 +1,55 @@
+# ═══════════════════════════════════════════════════════════════
+# AI-Powered LMS — Local Profile (H2 In-Memory Database)
+# Use this when PostgreSQL is not available.
+# Run with: mvn spring-boot:run -Dspring-boot.run.profiles=local
+# ═══════════════════════════════════════════════════════════════
+
+server:
+  port: 8080
+
+spring:
+  # ── DataSource (H2 In-Memory) ──
+  datasource:
+    url: jdbc:h2:mem:lms_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  # ── H2 Console ──
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+  # ── JPA / Hibernate ──
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+# ── Swagger ──
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+
+# ── Logging ──
+logging:
+  level:
+    com.abhinav.lms: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+
+# ── Application Configuration ──
+app:
+  jwt:
+    secret: "9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d3b7a1e5c8f3d6b2c9a4f2c8d"
+    expiration-ms: 900000 # 15 minutes
+    refresh-expiration-ms: 604800000 # 7 days

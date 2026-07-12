@@ -1,0 +1,14 @@
+package com.abhinav.lms.quiz.repository;
+
+import com.abhinav.lms.quiz.entity.QuizAnswer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.UUID;
+
+@Repository
+public interface QuizAnswerRepository extends JpaRepository<QuizAnswer, UUID> {
+
+    List<QuizAnswer> findByAttemptId(UUID attemptId);
+}

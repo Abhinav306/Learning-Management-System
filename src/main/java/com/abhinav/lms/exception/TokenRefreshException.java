@@ -1,0 +1,12 @@
+package com.abhinav.lms.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class TokenRefreshException extends BadRequestException {
+
+    public TokenRefreshException(String token, String message) {
+        super(String.format("Failed for [%s]: %s", token, message));
+    }
+}

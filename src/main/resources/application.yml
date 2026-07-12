@@ -1,0 +1,55 @@
+# ═══════════════════════════════════════════════════════════════
+# AI-Powered LMS — Common Configuration
+# ═══════════════════════════════════════════════════════════════
+
+spring:
+  application:
+    name: ai-powered-lms
+
+  profiles:
+    active: dev
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+app:
+  upload:
+    dir: uploads
+
+  # ── JPA / Hibernate (common) ──
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+  # ── Jackson ──
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+    time-zone: UTC
+
+# ── Server ──
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+
+# ── Actuator ──
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
