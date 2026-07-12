@@ -1,0 +1,504 @@
+Part 1: Sprint Completion Summary
+Sprint	Name	Status	Key Deliverables
+1	Project Foundation	✅	Maven skeleton, BaseEntity, ApiResponse, GlobalExceptionHandler, Swagger
+2	User Module	✅	User CRUD, MapStruct, validation, pagination
+3	Authentication & Authorization	✅	JWT login/signup/refresh, BCrypt, @PreAuthorize, SecurityConfig
+4	Course Management	✅	Course/Category/Section CRUD, Specification filters, instructor-only editing
+5	Lesson Management	✅	Lessons inside Sections, reordering, content types
+6	Enrollment	✅	Enroll/drop, duplicate prevention, reactivation
+7	Progress Tracking	✅	Lesson completion, percentage calculation, auto-complete enrollment
+8	Assignments	✅	Assignment CRUD, submissions, grading, late detection
+9	Quiz Module	✅	Quiz CRUD, question types, auto-grading, attempt limits
+10	Course Reviews	✅	Ratings, one-per-student constraint, average calculation
+11	File Upload	✅	Multipart upload, type validation, LocalStorageService
+12	Notifications & WebSocket	✅	STOMP WebSocket, real-time push, REST history, mark-read
+13	Redis Caching	✅	@Cacheable/@CacheEvict, graceful degradation, RedisConfig
+14	AI Tutor	✅	Spring AI chat, SSE streaming, session persistence, system prompts
+15	AI Quiz Generation	✅	Generate quizzes from lesson text, structured JSON output parsing
+16	AI Course Recommendations	✅	Personalized recommendations, popularity fallback
+17	RAG — Chat with Documents	✅	PDF/DOCX/TXT extraction, vector embeddings, PGVector, similarity search
+18	Docker & Deployment	✅	Multi-stage Dockerfile, docker-compose (PGVector + Redis + App)
+19	Comprehensive Testing	✅	30+ new unit tests across 6 service classes
+20	Monitoring & Production Hardening	✅	Custom HealthIndicator, Flyway, Logback, polished README
+Part 2: File Creation Order (Learning Path)
+Study these files in this exact order in VSCode. Each group builds on the previous one.
+
+🟢 Group 1 — Project Foundation (Sprint 1)
+#	File Path	What You'll Learn
+1	pom.xml	Maven dependencies, Spring Boot starters, BOM management
+2	src/main/java/.../LmsApplication.java	@SpringBootApplication, entry point, component scanning
+3	src/main/resources/application.yml	YAML configuration, profiles, property binding
+4	src/main/resources/application-dev.yml	Profile-specific overrides, datasource config
+5	src/main/resources/application-local.yml	H2 in-memory DB for testing
+6	src/main/java/.../common/entity/BaseEntity.java	@MappedSuperclass, UUID primary keys, JPA auditing fields
+7	src/main/java/.../common/dto/ApiResponse.java	Generic response wrapper ApiResponse<T>
+8	src/main/java/.../common/dto/PagedResponse.java	Pagination wrapper with Spring Data Page<T>
+9	src/main/java/.../common/constants/AppConstants.java	Centralized constants
+10	src/main/java/.../config/JpaAuditingConfig.java	@EnableJpaAuditing, AuditorAware bean
+11	src/main/java/.../config/OpenApiConfig.java	Swagger/OpenAPI configuration
+12	src/main/java/.../config/CorsConfig.java	CORS filter for frontend
+13	src/main/java/.../exception/ResourceNotFoundException.java	Custom 404 exception
+14	src/main/java/.../exception/DuplicateResourceException.java	Custom 409 exception
+15	src/main/java/.../exception/BadRequestException.java	Custom 400 exception
+16	src/main/java/.../exception/BusinessException.java	Custom 422 exception
+17	src/main/java/.../exception/GlobalExceptionHandler.java	@RestControllerAdvice, centralized error handling
+🔵 Group 2 — User Module (Sprint 2)
+#	File Path	What You'll Learn
+18	src/main/java/.../user/entity/UserRole.java	Enums in JPA
+19	src/main/java/.../user/entity/User.java	@Entity, Lombok @Builder, field validations
+20	src/main/java/.../user/dto/CreateUserRequest.java	Request DTOs with @NotBlank, @Email, @Size
+21	src/main/java/.../user/dto/UpdateUserRequest.java	Partial update DTO
+22	src/main/java/.../user/dto/UserResponse.java	Response DTO (no password exposed)
+23	src/main/java/.../user/mapper/UserMapper.java	MapStruct @Mapper interface
+24	src/main/java/.../user/repository/UserRepository.java	JpaRepository, custom query methods
+25	src/main/java/.../user/service/UserService.java	Service interface (abstraction)
+26	src/main/java/.../user/service/UserServiceImpl.java	@Service, business logic, dependency injection
+27	src/main/java/.../user/controller/UserController.java	@RestController, @RequestMapping, HTTP methods
+🟡 Group 3 — Authentication & Security (Sprint 3)
+#	File Path	What You'll Learn
+28	src/main/java/.../security/model/UserPrincipal.java	UserDetails implementation
+29	src/main/java/.../security/service/CustomUserDetailsService.java	UserDetailsService, loading users from DB
+30	src/main/java/.../security/jwt/JwtTokenProvider.java	JWT creation, validation, claims extraction
+31	src/main/java/.../security/jwt/JwtAuthenticationFilter.java	OncePerRequestFilter, extracting JWT from headers
+32	src/main/java/.../config/SecurityConfig.java	SecurityFilterChain, @PreAuthorize, stateless sessions
+33	src/main/java/.../auth/dto/LoginRequest.java	Auth DTOs
+34	src/main/java/.../auth/dto/AuthResponse.java	Token response DTO
+35	src/main/java/.../auth/entity/RefreshToken.java	Refresh token entity
+36	src/main/java/.../auth/service/AuthService.java	Login, signup, refresh token logic
+37	src/main/java/.../auth/controller/AuthController.java	/api/v1/auth/login, /signup, /refresh
+🟠 Group 4 — Course, Section, Lesson (Sprints 4-5)
+#	File Path	What You'll Learn
+38	src/main/java/.../category/entity/Category.java	Self-referencing @ManyToOne (parent category)
+39	src/main/java/.../category/repository/CategoryRepository.java	existsByName, findBySlug
+40	src/main/java/.../category/service/CategoryServiceImpl.java	Slug generation, hierarchy
+41	src/main/java/.../course/entity/Course.java	Complex entity with @ManyToOne relationships
+42	src/main/java/.../course/entity/DifficultyLevel.java	Enum: BEGINNER/INTERMEDIATE/ADVANCED
+43	src/main/java/.../course/entity/CourseStatus.java	Enum: DRAFT/PUBLISHED/ARCHIVED
+44	src/main/java/.../course/entity/Section.java	Ordered sections within a course
+45	src/main/java/.../course/entity/Lesson.java	Lessons within sections
+46	src/main/java/.../course/repository/CourseRepository.java	JpaSpecificationExecutor for dynamic filtering
+47	src/main/java/.../course/service/CourseServiceImpl.java	Specification-based search, ownership checks
+48	src/main/java/.../course/controller/CourseController.java	Nested resource routing
+🔴 Group 5 — Enrollment, Progress, Assignments, Quizzes, Reviews (Sprints 6-10)
+#	File Path	What You'll Learn
+49	src/main/java/.../enrollment/entity/Enrollment.java	Unique constraint (student, course)
+50	src/main/java/.../enrollment/service/EnrollmentServiceImpl.java	Reactivation logic, self-enrollment guards
+51	src/main/java/.../enrollment/entity/LessonProgress.java	Progress tracking per lesson
+52	src/main/java/.../enrollment/service/LessonProgressServiceImpl.java	Auto-complete enrollment at 100%
+53	src/main/java/.../assignment/entity/Assignment.java	Due dates, nullable lesson FK
+54	src/main/java/.../assignment/entity/AssignmentSubmission.java	Status: SUBMITTED/GRADED/LATE
+55	src/main/java/.../assignment/service/AssignmentServiceImpl.java	Late detection, grading
+56	src/main/java/.../quiz/entity/Quiz.java	Timer, passing score, max attempts
+57	src/main/java/.../quiz/entity/QuizQuestion.java	Question types, JSON options
+58	src/main/java/.../quiz/entity/QuizAttempt.java	Attempt tracking, auto-grading
+59	src/main/java/.../quiz/service/QuizServiceImpl.java	Full quiz lifecycle
+60	src/main/java/.../review/entity/Review.java	Rating 1-5, one per student
+61	src/main/java/.../review/service/ReviewServiceImpl.java	Enrollment-gated reviews
+🟣 Group 6 — File Upload, Notifications, Caching (Sprints 11-13)
+#	File Path	What You'll Learn
+62	src/main/java/.../file/service/StorageService.java	Interface for file operations
+63	src/main/java/.../file/service/LocalStorageService.java	Multipart handling, unique filenames
+64	src/main/java/.../notification/entity/Notification.java	Notification types enum
+65	src/main/java/.../notification/service/NotificationServiceImpl.java	Event-driven notifications
+66	src/main/java/.../config/WebSocketConfig.java	STOMP WebSocket configuration
+67	src/main/java/.../config/RedisConfig.java	Custom serializers, CacheManager
+⚫ Group 7 — AI Features (Sprints 14-17)
+#	File Path	What You'll Learn
+68	src/main/java/.../ai/entity/AiChatSession.java	AI session persistence
+69	src/main/java/.../ai/entity/AiChatMessage.java	Chat history storage
+70	src/main/java/.../ai/service/AiTutorServiceImpl.java	Spring AI ChatClient, SSE streaming
+71	src/main/java/.../ai/service/QuizGenerationServiceImpl.java	Structured output parsing from LLM
+72	src/main/java/.../ai/service/RecommendationServiceImpl.java	Personalization + fallback logic
+73	src/main/java/.../ai/entity/Document.java	Document metadata entity
+74	src/main/java/.../ai/service/DocumentServiceImpl.java	PDFBox, Apache POI extraction, chunking
+75	src/main/java/.../ai/service/RagServiceImpl.java	Vector search + context augmentation
+76	src/main/java/.../config/AiConfig.java	Profile-specific VectorStore beans
+⬜ Group 8 — Docker, Testing, Production (Sprints 18-20)
+#	File Path	What You'll Learn
+77	Dockerfile	Multi-stage builds, non-root execution
+78	.dockerignore	Excluding local artifacts
+79	docker-compose.yml	Service orchestration, health checks, volumes
+80	src/main/resources/application-prod.yml	Production environment variables
+81	src/test/java/.../user/service/UserServiceImplTest.java	Mockito @Mock, @InjectMocks, assertions
+82	src/test/java/.../category/service/CategoryServiceImplTest.java	Testing business rules
+83	src/test/java/.../course/service/CourseServiceImplTest.java	Permission testing
+84	src/test/java/.../enrollment/service/EnrollmentServiceImplTest.java	Constraint testing
+85	src/test/java/.../assignment/service/AssignmentServiceImplTest.java	Submission flow testing
+86	src/test/java/.../review/service/ReviewServiceImplTest.java	Boundary testing
+87	src/main/java/.../common/health/UploadsFolderHealthIndicator.java	Custom Actuator health check
+88	src/main/resources/logback-spring.xml	Structured logging, rolling files
+89	README.md	Production documentation
+Part 3: SDE Interview Guide — Everything in This Project
+📌 1. What is Spring Boot and how does it differ from Spring Framework?
+Spring Framework is a comprehensive Java framework providing IoC (Inversion of Control), DI (Dependency Injection), AOP, and more. But configuring it requires tons of XML or Java config.
+
+Spring Boot is an opinionated wrapper around Spring that provides:
+
+Auto-configuration: Automatically configures beans based on classpath dependencies
+Embedded server: Runs Tomcat/Jetty inside the JAR — no external server needed
+Starter dependencies: spring-boot-starter-web, spring-boot-starter-data-jpa, etc. bundle common libraries
+Production-ready features: Actuator health checks, metrics, externalized configuration
+java
+
+// This single annotation does EVERYTHING:
+@SpringBootApplication  // = @Configuration + @EnableAutoConfiguration + @ComponentScan
+public class LmsApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(LmsApplication.class, args);
+    }
+}
+Interview Answer: "Spring Boot eliminates boilerplate configuration. A single @SpringBootApplication annotation enables component scanning, auto-configuration, and marks the class as a configuration source. The embedded Tomcat server means I just run java -jar to deploy."
+
+📌 2. IoC (Inversion of Control) & Dependency Injection
+IoC = You don't create objects. The Spring Container (ApplicationContext) creates and manages them.
+
+DI = The container injects dependencies into your classes automatically.
+
+java
+
+// ❌ Without DI — tight coupling
+public class UserServiceImpl {
+    private UserRepository repo = new UserRepositoryImpl(); // YOU create it
+}
+// ✅ With DI — loose coupling
+@Service
+@RequiredArgsConstructor  // Lombok generates constructor
+public class UserServiceImpl {
+    private final UserRepository repo;  // Spring INJECTS it automatically
+}
+3 ways to inject dependencies:
+
+Constructor injection (✅ BEST — used in this project via @RequiredArgsConstructor)
+Field injection (@Autowired on field — ❌ not testable)
+Setter injection (@Autowired on setter — rarely used)
+Interview Answer: "I exclusively use constructor injection via Lombok's @RequiredArgsConstructor. It makes dependencies explicit, fields final (immutable), and classes easily unit-testable with Mockito's @InjectMocks."
+
+📌 3. How does the Database Connection Work?
+Step 1: Add the starter dependency in pom.xml:
+
+xml
+
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-jpa</artifactId>
+</dependency>
+Step 2: Configure in application-dev.yml:
+
+yaml
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/lms_db    # JDBC URL
+    username: lms_user                               # DB credentials
+    password: lms_password_123
+    driver-class-name: org.postgresql.Driver          # JDBC driver
+    hikari:                                           # Connection pool
+      maximum-pool-size: 5
+  jpa:
+    hibernate:
+      ddl-auto: update    # auto-creates/updates tables from entities
+Step 3: Spring Boot auto-configures:
+
+A DataSource bean (HikariCP connection pool)
+An EntityManagerFactory (Hibernate as JPA provider)
+A TransactionManager
+What happens at startup:
+
+
+Application starts → Spring reads YAML → Creates HikariCP DataSource
+→ Hibernate scans @Entity classes → Generates DDL (CREATE TABLE)
+→ Connection pool opens 5 connections → Ready to serve
+Interview Answer: "Spring Boot auto-configures a HikariCP connection pool from the YAML datasource properties. Hibernate, as the JPA provider, scans @Entity classes and manages the schema. I use ddl-auto: update in dev to evolve the schema, and Flyway migrations in production for versioned control."
+
+📌 4. Entity → Repository → Service → Controller (Layered Architecture)
+
+Client Request → Controller → Service → Repository → Database
+                    ↓              ↓            ↓
+                 DTOs          Business     JPA/SQL
+                 Validation    Logic        Queries
+Entity — Maps to a database table:
+
+java
+
+@Entity
+@Table(name = "users")
+public class User extends BaseEntity {
+    @Column(unique = true, nullable = false)
+    private String email;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
+}
+Repository — Data access layer (Spring Data generates implementations):
+
+java
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+    Optional<User> findByEmail(String email);    // Spring generates the SQL!
+    boolean existsByEmail(String email);
+}
+Service — Business logic:
+
+java
+
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+    public UserResponse createUser(CreateUserRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new DuplicateResourceException("User", "email", request.getEmail());
+        }
+        // ... create and save
+    }
+}
+Controller — HTTP endpoint:
+
+java
+
+@RestController
+@RequestMapping("/api/v1/users")
+public class UserController {
+    @PostMapping
+    public ResponseEntity<ApiResponse<UserResponse>> createUser(
+            @Valid @RequestBody CreateUserRequest request) {
+        return ResponseEntity.status(201).body(ApiResponse.success(userService.createUser(request)));
+    }
+}
+Interview Answer: "I follow a strict layered architecture. Entities map to tables, Repositories handle data access using Spring Data's derived queries, Services encapsulate business rules and transactions, and Controllers expose REST endpoints. DTOs ensure we never leak entity internals to clients."
+
+📌 5. What is JPA Auditing and BaseEntity?
+Every entity in our system extends BaseEntity:
+
+java
+
+@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+    @CreatedDate
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+    @CreatedBy
+    private String createdBy;
+    @LastModifiedBy
+    private String updatedBy;
+}
+Spring automatically fills createdAt, updatedAt, createdBy, updatedBy on save/update.
+
+Interview Answer: "I use @MappedSuperclass with JPA Auditing to automatically track who created/modified each record and when. The AuditorAware bean extracts the current user from the SecurityContext."
+
+📌 6. JWT Authentication Flow
+
+1. User POSTs /api/v1/auth/login with {email, password}
+2. AuthService verifies credentials via AuthenticationManager
+3. JwtTokenProvider generates a signed JWT (HS512, 15min expiry)
+4. Client stores the JWT and sends it in Authorization: Bearer <token>
+5. JwtAuthenticationFilter intercepts EVERY request:
+   → Extracts token from header
+   → Validates signature & expiry
+   → Loads UserDetails from DB
+   → Sets SecurityContextHolder.getContext().setAuthentication(...)
+6. @PreAuthorize("hasRole('ADMIN')") checks the authenticated user's role
+Interview Answer: "Our stateless authentication uses JWT tokens. The JwtAuthenticationFilter (extending OncePerRequestFilter) validates the token on every request and populates the SecurityContext. We use refresh tokens for silent re-authentication without re-entering credentials."
+
+📌 7. MapStruct for Object Mapping
+Instead of manually copying fields between DTOs and Entities:
+
+java
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+    User toEntity(CreateUserRequest request);
+    UserResponse toResponse(User user);
+    void updateEntityFromRequest(UpdateUserRequest request, @MappingTarget User user);
+}
+MapStruct generates the implementation at compile time — zero runtime reflection overhead.
+
+Interview Answer: "I use MapStruct over ModelMapper or manual mapping because it generates type-safe mapping code at compile time, catching errors early and having zero runtime performance cost."
+
+📌 8. Global Exception Handling
+java
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResponse<?> handleNotFound(ResourceNotFoundException ex) {
+        return ApiResponse.error(ex.getMessage());
+    }
+}
+Every exception type maps to a specific HTTP status code:
+
+ResourceNotFoundException → 404
+DuplicateResourceException → 409
+BadRequestException → 400
+BusinessException → 422
+Interview Answer: "I centralize all error handling in a @RestControllerAdvice class. Each custom exception maps to a specific HTTP status code, ensuring consistent error responses across the entire API without try-catch blocks in controllers."
+
+📌 9. Spring Data JPA Specifications (Dynamic Queries)
+For the course search/filter endpoint, we use Specification<Course>:
+
+java
+
+Specification<Course> spec = Specification.where(null);
+if (keyword != null) {
+    spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("title")), "%" + keyword + "%"));
+}
+if (categoryId != null) {
+    spec = spec.and((root, query, cb) -> cb.equal(root.get("category").get("id"), categoryId));
+}
+// ... chain as many filters as needed
+Page<Course> results = courseRepository.findAll(spec, pageable);
+Interview Answer: "For complex, optional filter combinations, I use JPA Specifications. They let me dynamically compose WHERE clauses at runtime without writing N different repository methods."
+
+📌 10. Redis Caching with @Cacheable
+java
+
+@Cacheable(value = "course_details", key = "#id")
+public CourseResponse getCourseById(UUID id) { ... }
+@CacheEvict(value = "courses", allEntries = true)
+public CourseResponse createCourse(CourseRequest request) { ... }
+First call → hits database, stores result in Redis
+Subsequent calls → returns cached value (skips DB entirely)
+On create/update → evicts the cache
+Interview Answer: "I use Spring's @Cacheable and @CacheEvict annotations backed by Redis. The RedisConfig defines custom Jackson serializers for polymorphic deserialization. I also implemented graceful degradation — if Redis is down, the app falls back to direct DB queries."
+
+📌 11. WebSocket Real-Time Notifications
+java
+
+@Configuration
+@EnableWebSocketMessageBroker
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+    public void registerStompEndpoints(StompEndpointRegistry registry) {
+        registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
+    }
+    public void configureMessageBroker(MessageBrokerRegistry registry) {
+        registry.enableSimpleBroker("/topic", "/queue");
+        registry.setApplicationDestinationPrefixes("/app");
+    }
+}
+When a student enrolls, the instructor gets an instant push notification via WebSocket.
+
+Interview Answer: "I configured STOMP over WebSocket for real-time notifications. Events like enrollment, grading, and course updates trigger server-side pushes to connected clients via /topic and /queue destinations."
+
+📌 12. Spring AI Integration (AI Tutor, Quiz Gen, RAG)
+java
+
+// AI Tutor — streaming chat with context
+@Autowired
+private ChatClient chatClient;
+Flux<String> response = chatClient.prompt()
+    .system(systemPrompt)          // "You are a tutor for Spring Boot..."
+    .messages(chatHistory)         // Last 20 messages for context
+    .user(userMessage)
+    .stream()
+    .content();
+RAG Pipeline:
+
+
+Upload PDF → PDFBox extracts text → TokenTextSplitter chunks it
+→ EmbeddingModel creates vectors → VectorStore.add(chunks)
+User asks question → VectorStore.similaritySearch(query)
+→ Top 5 relevant chunks retrieved → Injected into prompt context
+→ LLM generates answer citing sources
+Interview Answer: "I integrated Spring AI for three features: (1) A context-aware AI tutor using SSE streaming, (2) AI quiz generation with structured JSON output parsing, and (3) A full RAG pipeline — documents are chunked, embedded into PGVector, and retrieved via similarity search to augment LLM prompts."
+
+📌 13. Profile-Based Configuration
+
+application.yml          → Common defaults (flyway: disabled)
+application-local.yml    → H2 in-memory DB, SimpleVectorStore
+application-dev.yml      → Local PostgreSQL, Flyway enabled
+application-prod.yml     → Dockerized PostgreSQL/Redis, PGVector
+Activated via:
+
+bash
+
+$env:SPRING_PROFILES_ACTIVE="local"   # For tests
+$env:SPRING_PROFILES_ACTIVE="prod"    # For Docker
+Interview Answer: "I use Spring Profiles to manage environment-specific configurations. The local profile uses H2 and an in-memory vector store for fast, offline testing. The prod profile connects to Dockerized PostgreSQL with PGVector and Redis. Flyway migrations are disabled locally but enabled in dev/prod."
+
+📌 14. Unit Testing with Mockito
+java
+
+@ExtendWith(MockitoExtension.class)
+class UserServiceImplTest {
+    @Mock private UserRepository userRepository;
+    @Mock private UserMapper userMapper;
+    @Mock private PasswordEncoder passwordEncoder;
+    @InjectMocks private UserServiceImpl userService;
+    @Test
+    void createUser_ThrowsDuplicateResourceException() {
+        when(userRepository.existsByEmail(anyString())).thenReturn(true);
+        assertThrows(DuplicateResourceException.class,
+            () -> userService.createUser(createRequest));
+    }
+}
+@Mock creates fake implementations
+@InjectMocks creates the real service with mocked dependencies
+when(...).thenReturn(...) defines stub behavior
+verify(...) checks if methods were called
+Interview Answer: "I write unit tests using Mockito for isolated service testing. @Mock stubs out repositories and external dependencies, while @InjectMocks wires them into the service under test. I test both happy paths and edge cases like duplicate checks and permission violations."
+
+📌 15. Docker Containerization
+dockerfile
+
+# Stage 1: Build
+FROM maven:3.9.6-eclipse-temurin-21-alpine AS builder
+COPY pom.xml .
+RUN mvn dependency:go-offline          # Cache dependencies
+COPY src ./src
+RUN mvn package -DskipTests
+# Stage 2: Run
+FROM eclipse-temurin:21-jre-alpine
+USER 1000:1000                         # Non-root for security
+COPY --from=builder /app/target/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+yaml
+
+# docker-compose.yml
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    healthcheck:
+      test: pg_isready -U lms_user
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: redis-cli ping
+  app:
+    build: .
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+Interview Answer: "I use multi-stage Docker builds to minimize the runtime image size. The builder stage caches Maven dependencies for faster rebuilds. The runtime stage uses JRE-only Alpine and runs as a non-root user (UID 1000). Docker Compose orchestrates PostgreSQL, Redis, and the app with health-check-gated startup ordering."
+
+📌 16. Flyway Database Migrations
+yaml
+
+spring:
+  flyway:
+    enabled: true               # Only in dev/prod profiles
+    baseline-on-migrate: true   # Treats existing schema as V1
+Flyway tracks schema versions in a flyway_schema_history table. In production, you'd add migration scripts like V2__add_documents_table.sql instead of relying on Hibernate's ddl-auto.
+
+Interview Answer: "Flyway provides versioned, repeatable database migrations. I enabled it only for PostgreSQL profiles — the local H2 profile uses Hibernate's ddl-auto: create-drop for fast test cycles. In production, Flyway ensures schema changes are applied sequentially and tracked."
+
+📌 17. Quick Reference — Key Annotations Cheat Sheet
+Annotation	Purpose
+@SpringBootApplication	Entry point — enables auto-config + scanning
+@RestController	Marks class as REST API controller
+@Service	Marks class as business logic bean
+@Repository	Marks class as data access bean
+@Entity	Maps class to a database table
+@Table	Customizes table name
+@ManyToOne / @OneToMany	JPA relationship mappings
+@Valid	Triggers Jakarta Bean Validation
+@Transactional	Manages database transactions
+@PreAuthorize	Method-level security check
+@Cacheable / @CacheEvict	Redis cache read/invalidation
+@Mock / @InjectMocks	Mockito test annotations
+@Profile("dev")	Activates bean only in a specific profile
+@RequiredArgsConstructor	Lombok — generates constructor for final fields
