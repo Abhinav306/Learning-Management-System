@@ -187,3 +187,16 @@
 
 *Next: Sprint 13 — Redis Caching*
 
+---
+
+### Sprint 13: Redis Caching
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Added `spring-boot-starter-data-redis` dependency to Maven configuration.
+- Configured custom Redis Cache Manager with Jackson serializers supporting java.time module and type mapping.
+- Implemented fallback custom Cache Error Handler resolving to graceful database query execution if Redis connection fails.
+- Integrated caching annotations across Category, Course, and User service modules.
+
+*Next: Sprint 14 — AI Tutor*
+
