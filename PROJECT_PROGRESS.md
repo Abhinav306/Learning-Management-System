@@ -243,6 +243,24 @@
 
 *Next: Sprint 17 — RAG: Chat with Documents*
 
+---
+
+### Sprint 17: RAG — Chat with Documents
+**Status**: ✅ Completed
+**Date**: 2026-07-12
+
+- Configured `AiConfig.java` to dynamically support in-memory `SimpleVectorStore` for local development/tests and `PgVectorStore` for production.
+- Added Apache PDFBox and POI OOXML dependencies to `pom.xml` for document processing.
+- Created `Document` database entity and repository for file metadata mapping.
+- Implemented `DocumentServiceImpl` support for extracting text from PDF, Word, and text files.
+- Integrated `TokenTextSplitter` chunking and stateless ID mapping (documentId_index) to allow clean vector deletion.
+- Implemented `RagServiceImpl` resolving similarity searches, metadata filtering, context augmentation, and source file attributions.
+- Exposed REST controller endpoints for file uploads, listing, deletion, and query execution.
+- Wrote unit and integration tests covering document ingestion, index updates, and RAG execution.
+
+*Next: Sprint 18 — Docker & Deployment*
+
+
 
 
 

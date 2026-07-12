@@ -1,0 +1,26 @@
+package com.abhinav.lms.config;
+
+import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.vectorstore.pgvector.PgVectorStore;
+import org.springframework.ai.vectorstore.SimpleVectorStore;
+import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+@Configuration
+public class AiConfig {
+
+    @Bean
+    @Profile("!local")
+    public VectorStore pgVectorStore(JdbcTemplate jdbcTemplate, EmbeddingModel embeddingModel) {
+        return new PgVectorStore(jdbcTemplate, embeddingModel);
+    }
+
+    @Bean
+    @Profile("local")
+    public VectorStore inMemoryVectorStore(EmbeddingModel embeddingModel) {
+        return SimpleVectorStore.builder(embeddingModel).build();
+    }
+}
