@@ -1,0 +1,292 @@
+.container {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.detailsCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.headerInfo h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: var(--space-xs);
+}
+
+.shortDesc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-xs);
+}
+
+.bodyText {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Syllabus Accordion ── */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.sectionItem {
+  background: var(--bg-card);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.sectionHeader {
+  padding: 14px var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.01);
+  transition: var(--transition-fast);
+}
+
+.sectionHeader:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sectionTitleText {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.lessonList {
+  border-top: 1px solid var(--border-color);
+  background: rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.lessonItem {
+  padding: 12px var(--space-md);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.lessonItem:last-child {
+  border-bottom: none;
+}
+
+.lessonTitle {
+  flex-grow: 1;
+}
+
+.lessonDuration {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ── Side Checkout Panel ── */
+.sidePanel {
+  position: sticky;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.previewImage {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.checkoutCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.price {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--accent-cyan);
+}
+
+.actionBtn {
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+}
+
+.dropBtn {
+  width: 100%;
+  color: var(--accent-pink);
+  border-color: rgba(255, 107, 107, 0.2);
+}
+
+.dropBtn:hover {
+  background: rgba(255, 107, 107, 0.05);
+  border-color: var(--accent-pink);
+}
+
+.metaList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: var(--space-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-md);
+}
+
+.metaItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.metaVal {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Reviews ── */
+.reviewsSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.reviewItem {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+.reviewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.studentInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.studentAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.studentName {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.reviewStars {
+  display: flex;
+  gap: 2px;
+  color: var(--accent-amber);
+}
+
+.comment {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: var(--space-xs);
+  display: block;
+}
+
+/* ── Review Form ── */
+.reviewForm {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.starRatingSelect {
+  display: flex;
+  gap: 6px;
+  color: var(--text-muted);
+}
+
+.interactiveStar {
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.interactiveStar:hover {
+  transform: scale(1.15);
+}
+
+.starSelected {
+  color: var(--accent-amber);
+}
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  outline: none;
+  resize: none;
+  transition: var(--transition-fast);
+}
+
+.textarea:focus {
+  border-color: var(--accent-cyan);
+}
+
+@media (max-width: 992px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+  .sidePanel {
+    position: static;
+  }
+}

@@ -1,0 +1,250 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* ── Tabs ── */
+.tabsRow {
+  display: flex;
+  gap: var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 2px;
+}
+
+.tabBtn {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 10px var(--space-md);
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.tabBtn:hover {
+  color: var(--text-primary);
+}
+
+.activeTab {
+  color: var(--accent-cyan);
+  border-bottom-color: var(--accent-cyan);
+}
+
+/* ── Tab 1: Ingestion Panel ── */
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+@media (max-width: 992px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dropzone {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl) var(--space-md);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.01);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.dropzoneHover {
+  border-color: var(--accent-cyan);
+  background: rgba(102, 252, 241, 0.02);
+}
+
+.dropzoneTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dropzoneSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadActionRow {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.fileListHeader {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+.documentsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.docItem {
+  background: var(--bg-card);
+  border: var(--glass-border);
+  border-radius: var(--radius-md);
+  padding: 12px var(--space-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.docMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.docIcon {
+  color: var(--accent-cyan);
+}
+
+.docTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  word-break: break-all;
+}
+
+.docSub {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.deleteBtn {
+  color: var(--accent-pink);
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition-fast);
+}
+
+.deleteBtn:hover {
+  background: rgba(255, 107, 107, 0.08);
+}
+
+/* ── Tab 2: Semantic Q&A Console ── */
+.searchConsole {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.searchBar {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.searchInput {
+  flex-grow: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px var(--space-lg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.searchInput:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 15px rgba(102, 252, 241, 0.1);
+}
+
+.queryBtn {
+  padding: 0 var(--space-xl);
+  font-weight: 700;
+}
+
+.answerCard {
+  border-left: 4px solid var(--accent-purple);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.answerTitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.answerText {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.sourcesTitle {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.sourcesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+.emptyState {
+  padding: var(--space-2xl) var(--space-lg);
+  text-align: center;
+  background: var(--glass-bg);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+}
+
+.emptyState p {
+  margin-bottom: var(--space-md);
+}

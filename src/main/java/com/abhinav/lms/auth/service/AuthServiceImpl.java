@@ -54,7 +54,16 @@ public class AuthServiceImpl implements AuthService {
 
         User user = userMapper.toEntity(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(UserRole.STUDENT); // Self-registration defaults to STUDENT
+        
+        if (request.getRole() != null) {
+            try {
+                user.setRole(UserRole.valueOf(request.getRole().toUpperCase()));
+            } catch (IllegalArgumentException e) {
+                user.setRole(UserRole.STUDENT);
+            }
+        } else {
+            user.setRole(UserRole.STUDENT);
+        }
 
         User savedUser = userRepository.save(user);
         log.info("User registered successfully: {}", savedUser.getEmail());

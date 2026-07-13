@@ -13,13 +13,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class AiConfig {
 
     @Bean
-    @Profile("!local")
+    @Profile("prod")
     public VectorStore pgVectorStore(JdbcTemplate jdbcTemplate, EmbeddingModel embeddingModel) {
         return PgVectorStore.builder(jdbcTemplate, embeddingModel).build();
     }
 
     @Bean
-    @Profile("local")
+    @Profile("!prod")
     public VectorStore inMemoryVectorStore(EmbeddingModel embeddingModel) {
         return SimpleVectorStore.builder(embeddingModel).build();
     }
